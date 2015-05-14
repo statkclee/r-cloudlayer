@@ -21,7 +21,9 @@ title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
     - [소프트웨어 이해하기](01-software.html)
     - [클라우드 소개](01-cloud.html)
     - [클라우드 사업](01-cloud-biz.html)
+    - [클라우드 아키텍처](01-cloud-arch.html)
 2.  [소프트레이어 소개](02-softlayer.html)
+    - [소프트레이어 VM](02-vm.html)
 3.  [오토스케일링](03-auto-scaling.html)
 
 ## [번역 라이센스](license.html)
