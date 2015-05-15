@@ -28,6 +28,10 @@ Hi xwMOOC! You've successfully authenticated, but GitHub does not provide shell 
 ~~~
 
 마지막으로 쉘 화면에서 `ssh -T git@github.com` 명령어를 입력하면 설정이 완료된다.
+정상적인 작동여부를 테스트하기 위해서 `git push` 명령어를 보내면 아이디와 패스워드를 묻지않고 `ssh` 인증으로 
+작업을 완료한다.
 
-
+~~~ {.input}
+$ git push origin gh-pages
+~~~
 
