@@ -24,6 +24,7 @@ title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
     - [클라우드 아키텍처](01-cloud-arch.html)
 2.  [소프트레이어 소개](02-softlayer.html)
     - [소프트레이어 VM](02-vm.html)
+    - [원격 로그인, SSH](02-ssh.html)
 3.  [오토스케일링](03-auto-scaling.html)
 
 ## [번역 라이센스](license.html)
