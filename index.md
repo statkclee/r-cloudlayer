@@ -12,7 +12,7 @@ title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
 > [컴퓨터 과학 언플러그드](http://www.xwmooc.net/csunplugged/book.html)  
 > [러플](http://rur-ple.xwmooc.net/)  
 > [파이썬 거북이](http://statkclee.github.io/python-novice-turtles/index-kr.html)  
-> [정보과학을 위한 파이썬](http://python.xwmooc.net/)
+> [정보과학을 위한 파이썬](http://python.xwmooc.net/)  
 > [소프트웨어 카펜트리](http://www.xwmooc.net/swc/)
 
 ## 학습주제
@@ -26,6 +26,7 @@ title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
     - [소프트레이어 VM](02-vm.html)
     - [원격 로그인, SSH](02-ssh.html)
     - [가상 컴퓨터 GUI](02-xrdp.html)
+    - [파이썬 CLI](03-slcli.html)
     - [개발운영(DevOps)](02-devops.html)
 
 3.  [오토스케일링](03-auto-scaling.html)

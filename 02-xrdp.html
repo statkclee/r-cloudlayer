@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>xwMOOC: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://xwmooc.net" title="xwMOOC">
+          <img alt="xwMOOC banner" src="img/xwMOOC.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <h1 class="title">R 파이썬 소프트레이어 클라우드 그리고 xwMOOC</h1>
+          <h2 class="subtitle">클라우드 리눅스 위에 xrdp로 그래픽 사용자 인터페이스 사용</h2>
+<blockquote>
+<h2>학습 목표</h2>
+<ul>
+<li>클라우드 리눅스에 CLI 대신 GUI 사용</li>
+</ul>
+</blockquote>
+<h2 id="클라우드-리눅스를-원격-연결">클라우드 리눅스를 원격 연결</h2>
+<p>클라우드에 가상컴퓨터를 생성한 뒤에 데스크탑 환경을 설치하고 VNC 원격 데스크탑 혹은 <a href="http://www.xrdp.org/">XRDP</a>를 사용해서 윈도우와 마찬가지로 그래픽 사용자 인터페이스를 이용한다.</p>
+<pre class="input"><code>sudo apt-get install ubuntu-desktop
+sudo apt-get install xrdp
+sudo /etc/init.d/xrdp start</code></pre>
+<p>원격 컴퓨터에 우분투 데스크탑 환경을 설치하고 나서 XRDP도 이어서 설치한다. 설치가 완료되면 XRP 응용프로그램을 실행한다.</p>
+<pre class="input"><code>sudo adduser gildong sudo</code></pre>
+<p>윈도우 <code>원격 데스크톱연결</code>을 사용하기 전에 <code>root</code>가 아닌 사용자를 <code>gildong</code>으로 생성하고 <code>sudo</code> 권한도 부여한다.</p>
+<pre class="input"><code>su gildong
+echo &quot;gnome-session --session=ubuntu-2d&quot; &gt; .xsession</code></pre>
+<p><code>gildong</code> 사용자 세션 환경을 지정한다. <code>nano</code> 편집기를 사용해서 내용을 <code>.xsession</code> 파일에 저장해도 된다.</p>
+<p>윈도우에서 클라우드 우분투 가상컴퓨터에 로그인 하기 이해서 <code>시작</code> -&gt; <code>실행</code>을 클릭하고 <code>mstsc</code>를 입력하여 <code>원격 데스크톱연결</code>을 실행한다.</p>
+<div class="figure">
+<img src="fig/02-xrdp-mstsc.png" alt="윈도우 원격 데스크톱 연결 화면" /><p class="caption">윈도우 원격 데스크톱 연결 화면</p>
+</div>
+<p>마지막으로 XRDP 로그인 화면이 나오고 비밀번호를 넣게 되면 그래픽 사용자 인터페이스를 원격 컴퓨터에서 이용하게 된다.</p>
+<div class="figure">
+<img src="fig/02-xrdp.png" alt="XRDP 로그인 화면" /><p class="caption">XRDP 로그인 화면</p>
+</div>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://xwmooc.net">xwMOOC</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:i@xwmooc.net">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
