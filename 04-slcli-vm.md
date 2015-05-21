@@ -1,12 +1,74 @@
 ---
 layout: page
 title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
-subtitle: 
+subtitle: 명령라인 인터페이스 활용
 minutes: 10
 ---
 > ## 학습 목표
 >
-> *   
+> *   명령라인 인터페이스를 사용하여 클라우드를 활용한다.
+> *   가상 컴퓨터를 조회, 생성, 갱신, 삭제한다.
+> *   스케일업과 스케일다운으로 명령라인 인터페이스로 수행한다. 
+
+
+## 가상 컴퓨터 혹은 디바이스 살펴보기 (View)
+
+클라우드에 운영중인 컴퓨터가 다양한 이유로 인해서 변경이 된다. 과거 컴퓨터가 한대라면 모든 것이 명확하지만, 사용자의 목적에 맞게 빅데이터 분석용, 앱서비스 운영용, IoT 배포용, 테스트 개발용 등 다양한 컴퓨터를 수십 수백대 운영한다면 그 특정 컴퓨터를 찾아서 뭔가 조치를 취하는 것도 쉬운 일은 아니다. 
+
+우선 다음과 같은 전자우편으로 클라우드 서비스 운영업체에서 받았다고 가정하자. 특정 웹서버스를 운영중인 가상컴퓨터에 우분투 10.04가 설치되어 있는데 더이상 지원을 하지 못한다고 한다. 만약 적절한 조치를 취하지 않는다면 우분투 10.04 버젼을 계속 운영하면 발생되는 모든 문제는 사용자 문제로 귀책된다. 
+
+~~~ {.output}
+Customer Identification: xwMOOC (XXXXXX)
+Start Date: Wednesday 15-Apr-2015 00:00 UTC
+End Date: Saturday 20-Jun-2015 23:59 UTC
+Duration: 2 months
+Event Type: Planned Event
+Subject: Event 17577385 - Ubuntu Linux 10.04 LTS End of Sale/End of Support Notice
+
+=================================================================
+/ Event Description /
+Dear Customer,
+
+This notification is to inform you that on 4/15/2015 we will discontinue sales of Ubuntu Linux 10.04 LTS, and on 06/20/2015 we will discontinue support.  One or more of your servers will be impacted by this process.
+
+In order to continue using a supported version of Ubuntu Linux, we recommend upgrading to Ubuntu Linux 12.04 Precise Pangolin or Ubuntu Linux 14.04 Trusty Tahr, both available at no charge through an OS Reload.
+
+Should you have any questions or concerns, please reach out to a member of the Sales team by opening a ticket or initiating a chat.
+
+Best Regards,
+
+Your Sales Team
+
+
+/ Items Associated With This Event /
+82XXXX | rur-ple.xwmooc.net | XXX.XXX.XXX.XXX | XX.XXX.XX.XXX | Virtual Server
+~~~
+
+전자우편을 통해서 클라우드 제공업체가 영향을 받는 클라우드 서버 컴퓨터를 특정해서 알려줬다. 하지만, 현재 운영중인 클라우드 가상 컴퓨터와 디바이스가 어떤 것이 있는지 자세한 세부정보는 어떻게 되는지 확인해보자.
+
+~~~ {.input}
+root@shiny:~# slcli vs list
+~~~
+
+~~~ {.output}
+:.........:...............:.................:................:............:........:
+:    id   :    hostname   :    primary_ip   :   backend_ip   : datacenter : action :
+:.........:...............:.................:................:............:........:
+: 827.... :      d...     : 161............ : 10............ :   tok02    :   -    :
+: 622.... : elasti...arch :  119........... : 10............ :   hkg02    :   -    :
+: 766.... :     py...n    :  119........... : 10............ :   hkg02    :   -    :
+: 882.... :    rst...o    :  169........... : 10............ :   dal09    :   -    :
+: 826.... :    rur...e    : 161............ : 10............ :   tok02    :   -    :
+: 899.... :     sh...     :  169........... : 10............ :   dal09    :   -    :
+: 899.... :      s...     :  158........... :  10........... :   sjc01    :   -    :
+: 899.... :     sw...     :  119........... : 10............ :   hkg02    :   -    :
+: 623.... :     we...     :  119........... : 10............ :   hkg02    :   -    :
+: 937.... :    win...s    :  158........... :  10........... :   sjc01    :   -    :
+: 773.... :      w...     :  119........... : 10............ :   hkg02    :   -    :
+:.........:...............:.................:................:............:........:
+~~~
+
+`id`, `hostname`, `primary_ip`, `backend_ip`, `datacenter`, `action`이 나와있다.
 
 ## 가상 컴퓨터 생성
 
@@ -101,12 +163,12 @@ root@shiny:~# slcli vs create-options
 공용 `public`, 요금청구단위는 시간당이 아닌 `monthly` 월단위 정액제로 사양서를 만들어 주문한다.
 
 
-|   구성항목    |  명칭           |  선택 사양   |
-| ------------- |:----------------|:-------------|
+|   구성항목     |  명칭           |  선택 사양   |
+| -------------|:----------------|:-------------|
 | 호스명        |  hostname       |  slcli       |
-| 도메인명      |  domain         |  xwmooc.net  |
-| 데이터센터    |  datacenter     |  dal09       |
-| 프로세서갯수  |  cpu            |  2           |
+| 도메인명       |  domain         |  xwmooc.net  |
+| 데이터센터     |  datacenter     |  dal09       |
+| 프로세서갯수   |  cpu            |  2           |
 | 주기억장치    |  memory         |  1024        |
 | 운영체제      |  os             |  UBUNTU_14_64|
 | 보조기억장치  |  disk           |  25          |
@@ -298,7 +360,7 @@ root@shiny:~# slcli vs detail 9493553
 ~~~
 
 
-## 가상 컴퓨터 삭제
+## 가상 컴퓨터 삭제 (Delete)
 
 `slcli vs cancel slcli`와 같이 호스트명 혹은 `id`를 적어두고 GitHub 저장소 삭제하는 것과 마찬가지로 
 삭제를 확정하도록 `id`를 한번더 타이핑한다. 그러명 `slcli vs list`에서 삭제되는 것을 확인할 수 있다.
@@ -315,43 +377,3 @@ root@shiny:~# slcli vs list
  which the customer may cancel the server :
 :.........:...............:.................:................:............:........................:
 ~~~
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
