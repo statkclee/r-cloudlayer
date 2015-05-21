@@ -26,7 +26,9 @@ title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
     - [소프트레이어 VM](02-vm.html)
     - [원격 로그인, SSH](02-ssh.html)
     - [가상 컴퓨터 GUI](02-xrdp.html)
-    - [파이썬 CLI](03-slcli.html)
+    - [파이썬 CLI 설치](02-slcli.html)
+    - [명령라인 인터페이스](02-slcli-vm.html)
+    - [소프트레이어 모바일 및 오토스케일링 ](02-slcli-vm.html)
     - [개발운영(DevOps)](02-devops.html)
 
 3.  [오토스케일링](03-auto-scaling.html)
