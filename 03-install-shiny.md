@@ -8,7 +8,7 @@ minutes: 10
 >
 > *   SoftLayer API를 사용해서 데이터 과학용 가상 컴퓨터를 주문한다.
 > *   데이터 과학용 Shiny R 서버를 설치한다.
-> *   
+> *   Shiny 앱 개발을 위한 RStudio도 설치한다.
 
 
 ## 클라우드 API 사용하기
@@ -101,13 +101,14 @@ fullyQualifiedDomainName  :  shiny-sl.xwmooc.net
 
 `slcli vs list` 명령어를 통해서 새로운 가상 컴퓨터 `shiny-sl`이 생성된 것을 확인할 수 있다.
 
+~~~ {.input}
 root@shiny:~# slcli vs list
 :.........:..........:.................:................:............:........:
 :    id   : hostname :    primary_ip   :   backend_ip   : datacenter : action :
 :.........:..........:.................:................:............:........:
 : 9535091 : shiny-sl :  169.53.232.11  : 10.121.217.205 :   dal09    :   -    :
 :.........:..........:.................:................:............:........:
-
+~~~
 
 ### 주문한 가상 컴퓨터 삭제
 
@@ -140,6 +141,7 @@ root@shiny:~# slcli vs list
 > 이 용어는 로이 필딩(Roy Fielding)의 2000년 박사학위 논문에서 소개되었다. 필딩은 HTTP의 주요 저자 중 한 사람이다. 이 개념은 네트워킹 문화에 널리 퍼졌다.
 > 엄격한 의미로 REST는 네트워크 아키텍처 원리의 모음이다. 여기서 '네트워크 아키텍처 원리'란 자원을 정의하고 자원에 대한 주소를 지정하는 방법 전반을 일컫는다. 간단한 의미로는, 웹 상의 자료를 HTTP위에서 SOAP이나 쿠키를 통한 세션 트랙킹 같은 별도의 전송 계층 없이 전송하기 위한 아주 간단한 인터페이스를 말한다. 이 두 가지의 의미는 겹치는 부분과 충돌되는 부분이 있다. 필딩의 REST 아키텍처 형식을 따르면 HTTP나 WWW이 아닌 아주 커다란 소프트웨어 시스템을 설계하는 것도 가능하다. 또한, 리모트 프로시저 콜 대신에 간단한 XML과 HTTP 인터페이스를 이용해 설계하는 것도 가능하다.
 > 필딩의 REST 원리를 따르는 시스템은 종종 RESTful이란 용어로 지칭된다. 열정적인 REST 옹호자들은 스스로를 RESTafrians 이라고 부른다.
+>  
 > 출처: 위키피디아 REST [http://ko.wikipedia.org/wiki/REST](http://ko.wikipedia.org/wiki/REST)
 
 SoftLayer REST에 대한 자세한 사항은 [http://sldn.softlayer.com/article/rest](http://sldn.softlayer.com/article/rest) 기사를 참조한다.
@@ -316,7 +318,8 @@ root@shiny-sl:~# sudo gdebi rstudio-server-0.98.1103-amd64.deb
 `Sign in to RStudio` 화면에 사용자명(`username:`)과 비밀번호(`Password:`)를 넣고 `Sign In`하라고 한다.
 절대 `root`권한을 가지고 로그인하면 들어가지 않는다. `root`권한을 가지고 사용자를 추가한 후에 추가된 사용자명을 가지고 로그인한다.
 [useradd](http://linux.die.net/man/8/useradd)를 통해서 사용자 추가를 추가하고, [userdel](http://linux.die.net/man/8/userdel)을 통해서 사용자를 삭제한다. `adduser` 혹은 `useradd` 동일한 명령어다. `xwmooc` 사용자를 `sudo useradd -m xwmooc` 혹은 `sudo adduser -m xwmooc`
-명령어로 설정했으니, 다음올 비밀번호를 설정한다. `sudo passwd xwmooc` 비밀번호를 두번 입력하게 되면 설정이 완료되었다.
+명령어로 설정했으니, 다음올 비밀번호를 설정한다. `sudo passwd xwmooc` 비밀번호를 두번 입력하게 되면 설정이 완료되었다.  
+  
 **주의**: `sudo useradd -m xwmooc` 명령어에서 `-m` 옵션 플래그는 홈디렉토리를 생성하게 만든다. 그래야지만 정상적으로 `RStudio` 작업이 가능하다.
 
 ~~~ {.input}
