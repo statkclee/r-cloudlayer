@@ -28,8 +28,9 @@ title: R 파이썬 소프트레이어 클라우드 그리고 xwMOOC
     - [클라우드 GUI와 CLI](02-xrdp-cli.html)
     - [가상컴퓨터 CRUD](02-slcli-crud.html)
     - [개발운영(DevOps)](02-devops.html)
-
+3.  [데이터 과학용 Shiny R 서버](03-install-shiny.html)
 3.  [오토스케일링](03-auto-scaling.html)
+
 
 ## [번역 라이센스](license.html)
 
