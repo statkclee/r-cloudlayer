@@ -255,6 +255,7 @@ root@shiny-sl:~# $ sudo su - -c "R -e \"install.packages('shiny', repos='http://
 
 `R`과 `Shiny` 패키지를 설치한 다음에 **gdebi**를 다음에 설치해야 한다. 그리고 나서 `gdebi`를 통해서 `Shiny 서버`를 설치할 수 있다.
 `wget`을 통해서 `Shiny 서버` 설치 파일을 다운로드받고, `gdebi`를 통해서 `Shiny 서버`를 설치한다.
+
 ~~~ {.input}
 root@shiny-sl:~# sudo apt-get install gdebi-core
 root@shiny-sl:~# wget http://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.3.0.403-amd64.deb
