@@ -214,10 +214,99 @@ root@dev:/var/www/html/js# wget http://code.jquery.com/jquery-2.1.4.min.js
 </html>
 ~~~
 
-## Jekyll 설치
 
+### 프론트엔드 앱개발 툴체인 : Jekyll
 
+우분투에서 **Jekyll**을 설치할 때 난관이 많다. 특히 Jekyll이 `Ruby`기반이라 특히 그렇다. 우분투에서 Jekyll 정적 웹페이지(Static Webpage)를 구축하는 방법은 다음과 같다.
+
+#### 1. 구 루비 버젼 확인 및 삭제
 
 ~~~ {.input}
-root@dev:~/bootstrap# apt-get install jekyll
+# 루비 버젼확인 및 설치된 오래된 루비 버젼 삭제
+root@jekyll:~# ruby -v
+ruby 1.8.7 (2011-06-30 patchlevel 352) [x86_64-linux]
+root@jekyll:~# sudo apt-get purge ruby* 
 ~~~
+
+#### 2. RVM 기반 루비 최신 버젼 설치
+
+RVM(Ruby Version Management)은 루비버젼관리 소프트웨어다. RVM 잘못된 버젼으로 작업을 하면 우분투 환경에서 엄청난 오류와 싸워야 된다. 먼저 `ruby-rvm`을 제거하고 깔끔한 상태로 시작한다. 자세한 사항은 [우분투 루비 설치원문](http://stackoverflow.com/questions/9056008/installed-ruby-1-9-3-with-rvm-but-command-line-doesnt-show-ruby-v/9056395#9056395)을 참조한다.
+
+~~~ {.input}
+root@jekyll:~# sudo apt-get --purge remove ruby-rvm
+root@jekyll:~# sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
+~~~
+
+새 터미널 윈도우를 열어서 다음 명령어를 날렸을 때 아무것도 없다면 이제 준비가 완료된 것이다. 만약 뭔가 출력결과가 있다면, 컴퓨터를 다시 부팅하자.
+
+~~~ {.input}
+root@jekyll:~# env | grep rvm
+~~~
+
+다음 명령어를 통해서 `RVM`을 설치한다. 
+
+~~~ {.input}
+root@jekyll:~# \curl -L https://get.rvm.io | 
+  bash -s stable --ruby --autolibs=enable --auto-dotfiles
+root@jekyll:~# ruby -v
+ruby 2.2.1p85 (2015-02-26 revision 49769) [x86_64-linux]
+~~~
+
+#### 3. Jekyll 설치
+
+먼길을 돌아 이제야 Jelyll을 설치할 수 있다.[Jekyll](http://jekyllrb.com/)은 루비 언어로 만들어졌으며 단순(Simple)하고, 정적(Static)이며, 블로그 친화적이다. 이와 같은 아름다운 장점으로 인해서 루비를 다시 설치하는 고난의 길을 걸어왔다. 다음은 허무하게도 매우 단순하다.
+
+[GitHub](https://github.com/)이 워드프레스와 견줄만한 블로그 서비스를 제공하고 있어서 `gem install github-pages` 명령어를 날리면 모든 설치가 완료된다. `jekyll serve` 명령어로 정상적으로 실행이 되는지 확인한다.
+
+~~~ {.input}
+root@jekyll:~# gem install github-pages
+~~~
+
+~~~ {.output}
+root@jekyll:~# jekyll serve
+Configuration file: none
+            Source: /root
+       Destination: /root/_site
+      Generating...
+                    done.
+ Auto-regeneration: enabled for '/root'
+Configuration file: none
+    Server address: http://0.0.0.0:4000/
+  Server running... press ctrl-c to stop.
+~~~
+
+#### 4. Jekyll 테마 및 정적웹 블로그 서비스 개발
+
+Jekyll을 설치한 다음 [Jekyll 테마](http://jekyllthemes.org/) 사이트에서 원하는 테마를 얻어 다운로드하고 `jekyll serve` 혹은 `jekyll -t build -d _site` 명령어를 보내면 `_site` 디렉토리에 정적웹 블로그 서비스가 자동 생성된다.
+
+`gem install rouge`는 다운로드 받은 `Jekyll 테마, tufte-jekyll`에 의존성이 있어 미리 설치한 것이다. 압축파일을 풀고 테마 디렉토리로 이동해서 `jekyll serve`를 실행하면 정적 웹페이지를 자동으로 `_site`에 생성해 준다. `_site`의 `index.html` 파일을 포함한 모든 파일을 웹서버 서비스 저장소로 옮겨 놓으면 서비스 준비가 완료된다.
+
+~~~ {.input}
+root@jekyll:~# gem install rouge 
+root@jekyll:~# wget https://github.com/clayh53/tufte-jekyll/archive/master.zip
+root@jekyll:~# unzip master.zip
+master.zip  tufte-jekyll-master
+root@jekyll:~# cd tufte-jekyll-master/
+root@jekyll:~/tufte-jekyll-master# jekyll serve
+~~~
+
+~~~ {.output}
+Configuration file: /root/tufte-jekyll-master/_config.yml
+            Source: /root/tufte-jekyll-master
+       Destination: /root/tufte-jekyll-master/_site
+      Generating...
+                    done.
+ Auto-regeneration: enabled for '/root/tufte-jekyll-master'
+Configuration file: /root/tufte-jekyll-master/_config.yml
+    Server address: http://0.0.0.0:4000
+  Server running... press ctrl-c to stop.
+^Croot@jekyll:~/tufte-jekyll-master# ls
+about        _example-config.yml  LICENSE    Rakefile
+assets       feed.xml             page       README.md
+_config.yml  fonts                _page.txt  _scss
+css          _includes            _plugins   _site
+_data        index.html           _posts     UploadToGithub.Rakefile
+_drafts      _layouts             _post.txt
+~~~
+
+![Jekyll 정적 웹페이지 서비스](fig/jekyll-static-web.png)
