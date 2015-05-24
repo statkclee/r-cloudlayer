@@ -93,6 +93,46 @@ root@dev:~#  apt-get install jenkins
 ![클라우드 가상 컴퓨터 우분투에 젠킨스 설치](fig/jenkins-ubuntu.png)
 
 
+> ## 폴링(Polling)과 푸쉬(Push) {.callout}
+>
+> Git/GitHub 같은 버젼관리 시스템에서 커밋으로 변경사항을 발생했을 경우
+> 인지하는 방법이 두가지가 있다: 폴링(Polling), 푸쉬(Push). 
+> 폴링은 주지적으로 변경사항이 있는지 Git/GitHub 버젼관리 시스템에 문의한다.
+> 반면에 푸쉬는 변경사항이 있을데 Git/GitHub 변경관리 시스템이 그냥 알려준다.
+
+
+### 젠킨스(Jenkins) 깃허브(GitHub) 플러그인 설치
+
+젠킨스의 강력한 기능은 다양한 확장기능 플러그인(Plugin)을 갖는다. 개인이 혼자 개발을 할때는 Git, 여러명이 공동으로 할 때, 특히 외국 사람과 공동작업을 수행할 때는 GiHub가 좋다. 배포 및 빌드를 젠킨스를 통해서 연계하게 되면, 개발과 빌드 배포가 모두 자동화되어 생산성을 많이 향상 시킬 수도 있다.
+
+젠킨스 깃허브 플러그인 설치는 먼저 관리자 권한이 있는 사용자로 로그인 한다음 좌측메뉴에서 `Jenkins 관리` -> `플러그인 관리`에서 *설치가능(Available)* 탭을 클릭하고 `필터:` 검색창에 `Git`를 입력하면 다양한 `Git` 관련 플러그인이 나타난다. **GitHub Plugin**을 클릭하고, `지금 다운로드하고 재시작 후 설치하기`를 클릭해서 플러그인 설치를 완료한다.
+
+폴링과 푸쉬 방법 모두 변경사항을 인지하고 자동으로 빌드 및 배포실행한다는 측면에서 동일하나 폴링은 Git/GitHub 버젼관리 시스템에 변경사항이 필요없지만, 젠킨스나 Git/GitHub에 많은 부하를 줄 수 있고, 폴링 주기에 따라 변경사항 반영이 부족할 수 있다. 푸쉬방식은 전송하는 Git/GitHub와 받는쪽 젠킨스 모두 일정 작업이 필요하다. 하지만, 폴링에 비해서 변경사항이 발생되면 최소의 부하로 즉시 반영할 수 있는 장점이 있다.
+
+### 젠킨스(Jenkins) 깃허브(GitHub) 플러그인 설치
+
+### 제킬 데모시연 프로그램 설치 
+
+제킬 테마에서 [Jekyll Masonry](http://jekyllthemes.org/themes/jekyll-masonry/)를 시연데모용도로 설치한다. 여러가지 방법이 있지만, 제킬이 설치된 상태에서 `git clone`을 통해서 바로 웹에서 볼수 있도록 브랜치 `-b gh-pages`를 인자로 넣고 [Jekyll Masonry](http://jekyllthemes.org/themes/jekyll-masonry/)가 설치된 깃허브 페이지를 다운로드 한다. 그러면 `jekyll serve` 명령에 `_site`로 정적 웹페이지가 자동 설치되고 `http://161.202.103.101:4000/`와 같이 포트번호 **4000**을 열게되면 웹사이트가 개설된 것을 확인할 수 있다.
+
+~~~ {.input}
+root@dev:~# git clone -b gh-pages git@github.com:pasindud/jekyll-masonry.git
+root@dev:~# cd jekyll-masonry-master/
+root@dev:~/jekyll-masonry-master# jekyll serve
+~~~
+
+![제킬테마에서 선택한 테마 설치화면](fig/jekylltheme-jenkins-demo.png)
+
+
+
+
+
+
+
+
+
+
+
 [Hudson and Jenkins]: http://en.wikipedia.org/wiki/Jenkins_(software)
 [Jenkins on Ubuntu]: https://www.rosehosting.com/blog/install-jenkins-on-an-ubuntu-14-04-vps/
 
