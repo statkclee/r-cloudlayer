@@ -35,3 +35,64 @@ Hi xwMOOC! You've successfully authenticated, but GitHub does not provide shell 
 $ git push origin gh-pages
 ~~~
 
+## GitHub 웹훅(WebHooks) 자동 배포
+
+테스트 및 디버그 쉽고, 확장성이 뛰어 나고, 좀더 안전한 방법
+
+1. `Jekyll` 사이트 실행만 전담하는 새로운 사용자를 생성한다.
+- 신규 사용자가 모든 `Jekyll` 관련 모든 작업을 할 수 있는지 확실히 한다.
+2. `Jekyll` 사이트를 실제 서비스할 가상 컴퓨터를 생성한다.
+- 생성한 신규 사용자가 가상 컴퓨터를 실행할 수 있게 한다.
+- 문서 루트 (document root)를 생성한 신규 유저가 소유하고 관리하게 한다.
+
+![GitHub 웹훅 흐름에 따른 정적웹(Jekyll) 서비스 자동 배포](fig/github-webhooks.png)
+
+## 개발운영 툴체인 구축
+
+데브옵스(DevOps, 개발(Development)과 운영(Operations)의 합성어)는 과거 개발과 운영이 분리되어 발생하는 
+문제점을 개선하여 소통과 협업, 자동화를 강조하는 개발방법론으로 소프트웨어 제품과 서비스를 빠른 시간에 개발 및 배포할 수 있게 하는 방법 중 하나다. 과거에는 [허드슨(Hudson)](http://www.hudson-ci.org/)을 많이 사용하였으나, [오라클](http://www.oracle.com/index.html)에 인수합병되면서 커뮤니티가 [허드슨과 젠킨스로 이원화][Hudson and Jenkins]되고 허드슨 핵심개발자 Kohsuke Kawaguchi는 2011년 구글 오라일리 공개소프트웨어상을 수상했다. 2013년 12월 기준 GitHub에 젠키스는 개발자 567명, 1,100 여개 저장소, 반면에 허드슨은 개발자 32명, 공개 저장소 17개 상황으로 전개되었다. 
+
+### 젠킨스(Jenkins) 설치
+
+젠킨스는 기본적으로 자바기반으로 웹 인터페이스 사용을 전제로 하고 있다. 
+따라서, `아파치`같은 웹서버 및 자바 JDK 혹은 JRE를 사전에 설치해야 한다.
+여기에서는 공개 소프트웨어 자바(JAVA) 7을 `apt-get install openjdk-7-jdk`을 통해서 설치한다. 
+
+~~~ {.input}
+root@dev:~# apt-get update            # 최신 갱신 가져오기
+root@dev:~# apt-get upgrade           # 최신시스템으로 개선 업그레이드
+root@dev:~# apt-get install apache2   # 아파치 웹서버 설치
+root@dev:~# apt-get install openjdk-7-jdk # 공개소프트웨어 자바 7 설치
+root@dev:~# java -version
+java version "1.7.0_79"
+OpenJDK Runtime Environment (IcedTea 2.5.5) (7u79-2.5.5-0ubuntu0.14.04.2)
+OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)
+~~~
+
+웹서버와 자바 설치가 완료되면, 이제 젠킨스를 설치하자.
+젠킨스 설치를 위한 키값과 소스정보를 가져온다. 먼저 키값을 가져오고 나서 젠킨스 설치대상목록 정보를 가져온다.
+젠킨스를 설치하기 전에 다시 정보를 갱신하고 나서 `apt-get install jenkins` 명령어로 설치한다.
+
+~~~ {.input}
+root@dev:~# wget -q -O - https://jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+root@dev:~# sh -c 'echo deb http://pkg.jenkins-ci.org/debian binary/ > /etc/apt/sources.list.d/jenkins.list'
+root@dev:~# apt-get update
+root@dev:~#  apt-get install jenkins
+~~~
+
+젠키스 설치가 완료되면 기본적으로 데몬(Daemon)으로 뜨게 되어서, `http://161.202.103.101:8080/`와 같이 웹부라우져에 `8080` 포트에 IP 주소를 입력하면 된다. 
+
+![젠킨스 설치완료 화면](fig/jenkins-install.png)
+
+가장 먼저해야 되는 할일은 젠키스를 임의 사용자가 사용하지 못하도록 사용자 권한관리를 한다. 젠킨스 첫 화면에서 보면 좌측에 `Jenkins 관리` 메뉴가 있다. 이를 클릭하면, 중간에 `Configure Global Security`가 보인다.
+
+`Enable Security`를 체크하고 *Security Realm*아래 `Jenkins' own user database` 아래 `사용자의 가입 허용`을 체크한다. *Authorization*에서는 `Matrix-based security`를 클릭하고 `Anonymous`에 *View*에 읽기권한 `Read`만 클릭하고 저장한다.
+
+사용자 권한 설정이 완료되면, 최초 사용자를 등록해야 한다. **Sign up**에 계정명, 암호, 암호확인, 이름, 이메일주소를 등록하면 `Administrator` 권한을 갖는 사용자가 생성되고 작업을 진행하게 된다. 젠킨스 설치의 자세한 사항과 원문은 다음 [웹사이트][Jenkins on Ubuntu]를 참고한다.
+
+![클라우드 가상 컴퓨터 우분투에 젠킨스 설치](fig/jenkins-ubuntu.png)
+
+
+[Hudson and Jenkins]: http://en.wikipedia.org/wiki/Jenkins_(software)
+[Jenkins on Ubuntu]: https://www.rosehosting.com/blog/install-jenkins-on-an-ubuntu-14-04-vps/
+
